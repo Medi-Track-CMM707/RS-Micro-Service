@@ -33,8 +33,6 @@ build/
 .vscode/
 
 .jpb
-
-K8s
 logs
 
 qodana.yaml
