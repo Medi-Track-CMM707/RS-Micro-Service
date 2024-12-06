@@ -53,10 +53,13 @@ jobs:
         service_account_key: ${{ secrets.GKE_SA_KEY }}
         project_id: ${{ secrets.GKE_PROJECT }}
 
+    - name: Save service account key
+      run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/gcloud-key.json
+
     - name: Authenticate kubectl
       run: |
         echo "Activating service account"
-        gcloud auth activate-service-account --key-file="${GKE_SA_KEY}"
+        gcloud auth activate-service-account --key-file=$HOME/gcloud-key.json
         echo "Fetching cluster credentials"
         gcloud container clusters get-credentials medi-track-cmm707 --region us-central1
 
