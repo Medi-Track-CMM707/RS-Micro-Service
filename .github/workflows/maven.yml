@@ -54,7 +54,7 @@ jobs:
         project_id: ${{ secrets.GKE_PROJECT }}
 
     - name: Save service account key
-      run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > $HOME/gcloud-key.json
+      run: echo "${{ secrets.GKE_SA_KEY }}" > $HOME/gcloud-key.json
 
     - name: Authenticate kubectl
       run: |
