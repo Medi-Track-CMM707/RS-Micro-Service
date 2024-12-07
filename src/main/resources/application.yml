@@ -2,9 +2,9 @@ spring:
   application:
     name: reservation-service
   datasource:
-    username: dev_postgres
-    password: devpg123
-    url: jdbc:postgresql://172.15.100.240:5432/dev_postgres
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
     hikari:
       minimum-idle: 10
       maximum-pool-size: 100
@@ -19,6 +19,8 @@ spring:
     properties:
       hibernate:
         default_schema: reservation
+  profiles:
+    active: local
 
 server:
   port: 3008
