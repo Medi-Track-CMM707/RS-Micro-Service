@@ -2,28 +2,23 @@ spring:
   application:
     name: reservation-service
   datasource:
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    url: ${DB_URL}
+    username: dev_postgres
+    password: devpg123
+    url: jdbc:postgresql://172.15.100.240:5432/dev_postgres
     hikari:
       minimum-idle: 10
       maximum-pool-size: 100
       connection-timeout: 30000  # 30 seconds
       idle-timeout: 6000000      # 100 minutes
       max-lifetime: 300000      # 5 minutes
-      data-source-properties:
-        socketFactory: com.google.cloud.sql.postgres.SocketFactory
-        cloudSqlInstance: medi-track-cmm707:us-central1:medi-track-sql
 
   jpa:
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     properties:
       hibernate:
         default_schema: reservation
-  profiles:
-    active: gcp
 
 server:
   port: 3008
