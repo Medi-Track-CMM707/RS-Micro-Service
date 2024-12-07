@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: reservation-service
-          image: nilakshanr/reservation-service:latest
+          image: nilakshanr/reservation-service:0.0.1
           ports:
             - containerPort: 8080
           readinessProbe:
