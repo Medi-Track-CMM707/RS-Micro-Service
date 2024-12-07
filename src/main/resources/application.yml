@@ -23,7 +23,7 @@ spring:
     active: local
 
 server:
-  port: 3008
+  port: 8080
   servlet:
     context-path: /rs
 
