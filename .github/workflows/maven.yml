@@ -62,9 +62,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Verify working directory
-      run: ls -R # Lists all files to confirm the directory structure
-
     - name: Deploy to GKE
       run: |
         kubectl apply -f $GITHUB_WORKSPACE/k8s/deployment.yaml

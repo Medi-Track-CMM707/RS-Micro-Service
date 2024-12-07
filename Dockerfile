@@ -11,5 +11,4 @@ ENV DB_URL=${DB_URL}
 ENV DB_USER_NAME=${DB_USER_NAME}
 ENV DB_PASSWORD=${DB_PASSWORD}
 
-
 CMD ["java", "-jar", "reservation-service.jar"]
