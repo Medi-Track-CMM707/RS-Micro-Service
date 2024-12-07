@@ -22,6 +22,8 @@ spring:
     properties:
       hibernate:
         default_schema: reservation
+  profiles:
+    active: gcp
 
 server:
   port: 3008
