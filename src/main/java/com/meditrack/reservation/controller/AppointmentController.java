@@ -25,6 +25,7 @@
 package com.meditrack.reservation.controller;
 
 import com.meditrack.reservation.model.entity.Appointment;
+import com.meditrack.reservation.service.AppointmentService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +39,14 @@ import org.springframework.web.bind.annotation.*;
 @Validated
 public class AppointmentController {
 
-    // GET endpoint to retrieve an appointment
+    private final AppointmentService appointmentService;
+
+    // Inject the AppointmentService using constructor injection
+    public AppointmentController(AppointmentService appointmentService) {
+        this.appointmentService = appointmentService;
+    }
+
+    // GET endpoint to retrieve an appointment by ID
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<Appointment> getAppointment(@PathVariable Long id) {
         log.info("Get Appointment with ID: {}", id);
@@ -49,7 +57,6 @@ public class AppointmentController {
             return ResponseEntity.notFound().build(); // Return 404 if not found
         }
     }
-
 
     // POST endpoint to create a new appointment
     @PostMapping(consumes = "application/json", produces = "application/json")
