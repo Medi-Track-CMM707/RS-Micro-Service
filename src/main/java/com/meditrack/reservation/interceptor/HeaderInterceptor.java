@@ -31,6 +31,17 @@ public class HeaderInterceptor implements HandlerInterceptor {
         // Extract details from the header
         String hospital = request.getHeader("x-hospital");
         String user = request.getHeader("x-user");
+
+        // Provide default values for testing
+        if (hospital == null || hospital.isEmpty()) {
+            hospital = "1"; // Default hospital ID
+            log.warn("x-hospital header is missing. Using default value: {}", hospital);
+        }
+        if (user == null || user.isEmpty()) {
+            user = "test-user"; // Default user
+            log.warn("x-user header is missing. Using default value: {}", user);
+        }
+
         // Set the details to the context
         try {
             headerReadService.setHeaderDetailsToContext(Long.parseLong(hospital), user);
@@ -44,5 +55,6 @@ public class HeaderInterceptor implements HandlerInterceptor {
         }
         return true;
     }
+
 }
 
