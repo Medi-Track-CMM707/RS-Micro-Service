@@ -10,7 +10,7 @@ public final class HeaderReadService {
     private String user;
 
     public void setHeaderDetailsToContext(Long hospitalId, String user) {
-        this.hospitalId = Long.valueOf(1);
-        this.user = "Nila";
+        this.hospitalId = hospitalId;
+        this.user = user;
     }
 }
