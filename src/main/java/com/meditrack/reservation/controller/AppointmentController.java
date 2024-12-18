@@ -41,12 +41,10 @@ public class AppointmentController {
 
     private final AppointmentService appointmentService;
 
-    // Inject the AppointmentService using constructor injection
     public AppointmentController(AppointmentService appointmentService) {
         this.appointmentService = appointmentService;
     }
 
-    // GET endpoint to retrieve an appointment by ID
     @GetMapping(value = "/{id}", produces = "application/json")
     public ResponseEntity<Appointment> getAppointment(@PathVariable Long id) {
         log.info("Get Appointment with ID: {}", id);
@@ -58,11 +56,9 @@ public class AppointmentController {
         }
     }
 
-    // POST endpoint to create a new appointment
     @PostMapping(consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> createAppointment(@RequestBody Appointment appointment) {
         log.info("Create Appointment: {}", appointment);
-        // Business logic for saving the appointment can be added here.
         return ResponseEntity.ok("Appointment created successfully");
     }
 }
