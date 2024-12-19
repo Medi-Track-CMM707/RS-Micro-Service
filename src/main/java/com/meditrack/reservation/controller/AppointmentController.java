@@ -1,6 +1,7 @@
 package com.meditrack.reservation.controller;
 
 import com.meditrack.reservation.model.entity.Appointment;
+import com.meditrack.reservation.repository.AppointmentRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 public class AppointmentController {
 
+    private final AppointmentRepository appointmentRepository;
+
+    public AppointmentController(AppointmentRepository appointmentRepository) {
+        this.appointmentRepository = appointmentRepository;
+    }
+
     @GetMapping(produces = "application/json")
     public ResponseEntity<Appointment> getAppointment() {
         log.info("Get Appointment");
-        return ResponseEntity.ok(new Appointment());
+        Appointment appointment = appointmentRepository.findById(1L).orElse(new Appointment());
+        return ResponseEntity.ok(appointment);
     }
 }
