@@ -32,6 +32,8 @@ public class Appointment extends Base {
 
     private Long patientId;
 
+    private Long doctorId;
+
     private Date appointmentDate;
 
     @Temporal(TemporalType.TIME)

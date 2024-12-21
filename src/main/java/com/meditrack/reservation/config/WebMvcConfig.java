@@ -9,14 +9,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    @Value("${spring.datasource.url}")
-    private String datasourceUrl;
-
     private final HeaderInterceptor headerInterceptor;
 
     public WebMvcConfig(HeaderInterceptor headerInterceptor) {
         this.headerInterceptor = headerInterceptor;
-        System.out.println("Datasource URL: " + datasourceUrl);
     }
 
     @Override

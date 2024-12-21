@@ -7,15 +7,23 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.context.request.WebRequestInterceptor;
 
 @Component
 @Slf4j
 public class HeaderInterceptor implements HandlerInterceptor {
 
+
     private final HeaderReadService headerReadService;
 
-    public HeaderInterceptor(HeaderReadService headerReadService) {
+    /**
+     * Create a new WebRequestHandlerInterceptorAdapter for the given WebRequestInterceptor.
+     *
+     * @param requestInterceptor the WebRequestInterceptor to wrap
+     */
+    public HeaderInterceptor(WebRequestInterceptor requestInterceptor, HeaderReadService headerReadService) {
         this.headerReadService = headerReadService;
     }
 
@@ -24,22 +32,28 @@ public class HeaderInterceptor implements HandlerInterceptor {
         // Extract details from the header
         String hospital = request.getHeader("x-hospital");
         String user = request.getHeader("x-user");
-        // Set the details to the context
-        try {
-            headerReadService.setHeaderDetailsToContext(Long.parseLong(hospital), user);
-        } catch (Exception e) {
-            log.error("Error while setting the tenant details to the context.", e);
-            String headerPath = request.getRequestURI();
-            if (headerPath.contains("/rs/swagger-ui.html") || headerPath.contains("/rs/v3/api-docs") || headerPath.contains("/rs/swagger-ui/")) {
-                return true;
-            }
-            throw new ReservationInvalidRequestException(ErrorCode.PRM_003002, "Invalid header details/ header details are missing. x-hospital and x-user are mandatory headers.");
+
+        // Set default values if headers are missing or invalid
+        if (hospital == null || hospital.isEmpty()) {
+            hospital = "101";  // Default hospital ID
         }
+
+        if (user == null || user.isEmpty()) {
+            user = "admin";  // Default user
+        }
+
+        try {
+            // Parse hospital id and set header details to context
+            headerReadService.setHeaderDetailsToContext(Long.parseLong(hospital), user);
+        } catch (NumberFormatException e) {
+            log.error("Error while setting the tenant details to the context. Invalid hospital ID: " + hospital, e);
+            throw new ReservationInvalidRequestException(ErrorCode.PRM_003002, "Invalid hospital ID in the 'x-hospital' header.");
+        }
+
         return true;
     }
+
 }
-
-
 
 // package com.meditrack.reservation.interceptor;
 
